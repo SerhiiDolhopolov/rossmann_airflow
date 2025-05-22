@@ -2,3 +2,4 @@
 logs/
 .venv
 *.pyc
+airflow-webserver.pid
