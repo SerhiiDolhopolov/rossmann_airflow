@@ -2,7 +2,7 @@ from datetime import datetime
 
 from airflow import DAG
 
-from config import TMP_PATH, SENDER_EMAIL, SENDER_PASSWORD, RECIPIENT_EMAIL
+from config import SENDER_EMAIL, SENDER_PASSWORD, RECIPIENT_EMAIL
 from dags.reports.report_template import get_report_dag
 from src.diagrams.revenue_by_shop import generate_revenue_by_shop
 from src.diagrams.payment_distrib import generate_payment_distrib
@@ -14,19 +14,19 @@ diagrams = [
     {
         'task_id': 'revenue_by_shop',
         'python_callable': generate_revenue_by_shop,
-        'output_path': TMP_PATH / "daily_revenue_by_shop.png",
+        'output_file_name': "daily_revenue_by_shop.png",
         'image_size': (190, 190),
     },
     {
         'task_id': 'payment_distrib',
         'python_callable': generate_payment_distrib,
-        'output_path': TMP_PATH / "daily_payment_distrib.png",
+        'output_file_name': "daily_payment_distrib.png",
         'image_size': (190, 190),
     },
     {
         'task_id': 'products_quantity',
         'python_callable': generate_products_quantity,
-        'output_path': TMP_PATH / "daily_products_quantity.png",
+        'output_file_name': "daily_products_quantity.png",
         'image_size': (190, 190),
     },
 ]

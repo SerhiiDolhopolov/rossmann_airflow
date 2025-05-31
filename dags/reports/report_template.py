@@ -38,26 +38,28 @@ def get_report_dag(
         schedule_interval=schedule_interval,
         start_date=start_date,
         catchup=catchup,
+        max_active_runs=1,
     ) as dag:
         diagram_tasks = []
         diagram_images = dict()
         for diagram in diagrams:
+            output_path = TMP_PATH / f"{start_date.strftime('%Y-%m-%d')}_{diagram['output_file_name']}"
             df_archive_name = diagram.get('df_archive_name', None)
             diagram_tasks.append(
                 PythonOperator(
                     task_id=diagram['task_id'],
                     python_callable=diagram['python_callable'],
                     op_kwargs={
-                        "output_path": diagram['output_path'],
+                        "output_path": output_path,
                         "from_date": from_date,
                         "to_date": to_date,
                         "df_archive_name": df_archive_name,
                     },
                 )
             )
-            diagram_images[diagram['output_path']] = diagram.get('image_size', (190, 190))
+            diagram_images[output_path] = diagram.get('image_size', (190, 190))
         
-        pdf_path = TMP_PATH / f"{dag_id}.pdf"
+        pdf_path = TMP_PATH / f"{start_date}_{dag_id}.pdf"
         total_pdf_task = PythonOperator(
                 task_id="total_pdf",
                 dag=dag,

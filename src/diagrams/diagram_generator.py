@@ -56,7 +56,6 @@ def generate_diagram(
             to_date,
         )
         raise RuntimeError(f"No data available for the period {from_date} to {to_date}.")
-    os.remove(output_path) if os.path.exists(output_path) else None
     
     figure = plot_diagram_func(df)
     figure.title(title)
