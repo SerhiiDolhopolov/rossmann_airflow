@@ -14,7 +14,8 @@
 
 <!-- omit in toc -->
 ## Services
-[![clickhouse](https://img.shields.io/badge/clickhouse-d6123c?style=for-the-badge&logo=clickhouse&logoColor=white)](https://clickhouse.com/)
+[![docker](https://img.shields.io/badge/docker-d6123c?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![airflow](https://img.shields.io/badge/airflow-d6123c?style=for-the-badge&logo=apacheairflow&logoColor=white)](https://airflow.apache.org/)
 
 <!-- omit in toc -->
 ## Table of Contents
@@ -34,11 +35,11 @@
 🔵 [**<- Previous part with API.**](https://github.com/SerhiiDolhopolov/rossmann_api)
 
 ## Project workflow
-This section contains Airflow DAGs with auto-reports sent to email and archiving ClickHouse data to S3 to reduce the load on the DWH and lower data storage costs.
+This section contains [Airflow](https://airflow.apache.org/) DAGs with auto-reports sent to email and archiving ClickHouse data to S3 to reduce the load on the DWH and lower data storage costs.
 
 ## Docker Containers
 **This Docker section includes:**
-  - **Airflow**
+  - **[Airflow](https://airflow.apache.org/)**
     - 🌐 Web interface: 
       - [localhost:1600](http://localhost:1600)
     - Login:
@@ -57,7 +58,7 @@ The daily DAG has 3 parallel operators for creating diagrams, then an operator f
 ![daily dag s3](images/daily_dag_s3.png)
 
 ### Monthly DAG
-The monthly DAG has 4 parallel operators for creating diagrams, then an operator for creating a PDF with these diagrams, and then sends the PDF to email and S3. Each monthly diagram aggregation is saved in S3 to use for longer analytics because ClickHouse has a TTL of 4 months.
+The monthly DAG has 4 parallel operators for creating diagrams, then an operator for creating a PDF with these diagrams, and then sends the PDF to email and S3. Each monthly diagram aggregation is saved in S3 to use for longer analytics because [ClickHouse](https://clickhouse.com/) has a TTL of 4 months.
 
 ![monthly dag](images/monthly_dag.png)
 ![monthly dag email](images/monthly_dag_email.png)
@@ -65,7 +66,7 @@ The monthly DAG has 4 parallel operators for creating diagrams, then an operator
 ![monthly dag s3](images/monthly_dag_s3.png)
 
 ### ClickHouse Archive DAG
-Each month, ClickHouse transactions are archived in S3 because S3 storage is several times cheaper. For archiving, the .parquet file format is used. This format has a high level of compression, columnar data storage, and both ClickHouse and Spark work well with it. The disadvantage is that people can't read the file directly.
+Each month, [ClickHouse](https://clickhouse.com/) transactions are archived in S3 because S3 storage is several times cheaper. For archiving, the .parquet file format is used. This format has a high level of compression, columnar data storage, and both [ClickHouse](https://clickhouse.com/) and [Spark](https://spark.apache.org/) work well with it. The disadvantage is that people can't read the file directly.
 
 ![archive dag](images/archive_dag.png)
 ![archive dag s3](images/archive_dag_s3.png)
